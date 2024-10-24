@@ -112,14 +112,10 @@
             <div class="login-form p-0">
               <div class="col-lg-12 mx-auto">
                 <form id="login-form">
-                  <input type="text" name="username" placeholder="Username or Email Address *"
+                  <input type="text" name="username" placeholder="Username*"
                     class="mb-3 ps-3 text-input">
                   <input type="password" name="password" placeholder="Password" class="ps-3 text-input">
                   <div class="checkbox d-flex justify-content-between mt-4">
-                    <p class="checkbox-form">
-                      <label class="">
-                        <input name="rememberme" type="checkbox" id="remember-me" value="forever"> Remember me </label>
-                    </p>
                     <p class="lost-password">
                       <a href="#">Forgot your password?</a>
                     </p>
