@@ -66,7 +66,7 @@
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header bg-danger">
+          <div class="modal-header bg-dark">
             <h1 class="modal-title text-white fs-5" id="deleteModalLabel">Delete Event</h1>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -74,14 +74,65 @@
             Are you sure you want to delete this event?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-dark rounded-3 text-white" data-bs-dismiss="modal">Close</button>
             <form id="deleteForm" action="del.php" method="POST">
                 <input type="hidden" id="deleteEventId" name="id_events"> 
-                <button type="submit" class="btn btn-danger">Delete</button> 
+                <button type="submit" class="btn btn-danger rounded-3">Delete</button> 
             </form>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title text-light" id="editEventModalLabel">Edit Event</h5>
+          <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editEventForm" method="POST" action="ed.php" enctype="multipart/form-data">
+            <input type="hidden" name="event_id" id="event_id">
+            <div class="form-group mb-3">
+              <label for="event-name">Event Name</label>
+              <input type="text" name="event-name" id="event-name" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <label for="DnT">Date and Time</label>
+              <input type="datetime-local" name="DnT" id="DnT" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <label for="slot">Max Capacity</label>
+              <input type="number" name="slot" id="slot" class="form-control" min="1" value="1">
+            </div>
+            <div class="form-group mb-3">
+              <label for="lokasi">Location</label>
+              <input type="text" name="lokasi" id="lokasi" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <label for="deskripsi">Description</label>
+              <textarea name="deskripsi" id="deskripsi" class="form-control"></textarea>
+            </div>
+            <div class="form-group mb-3">
+              <label for="Foto">Event Image</label>
+              <input type="file" name="Foto" id="Foto" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <label for="status">Event Status</label>
+              <select name="status" id="status" class="form-control">
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+                <option value="canceled">Canceled</option>
+              </select>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-warning rounded-3">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     </div>
 
 
@@ -91,3 +142,53 @@
 </body>
 
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    var deleteModal = document.getElementById('deleteModal');
+    var deleteEventIdInput = document.getElementById('deleteEventId');
+
+    if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var eventId = button.getAttribute('data-id');
+            deleteEventIdInput.value = eventId; 
+        });
+    }
+
+    var deleteUserModal = document.getElementById('deleteUserModal');
+    var deleteUserIdInput = document.getElementById('userId');
+
+    if (deleteUserModal) {
+        deleteUserModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var userId = button.getAttribute('data-user-id');
+            deleteUserIdInput.value = userId; 
+        });
+    }
+
+    const editEventModal = document.getElementById('editEventModal');
+
+    if (editEventModal) {
+        editEventModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const datetime = button.getAttribute('data-datetime');
+            const capacity = button.getAttribute('data-capacity');
+            const location = button.getAttribute('data-location');
+            const description = button.getAttribute('data-description');
+            const status = button.getAttribute('data-status');
+
+            document.getElementById('event_id').value = id;
+            document.getElementById('event-name').value = name;
+            document.getElementById('DnT').value = datetime;
+            document.getElementById('slot').value = capacity;
+            document.getElementById('lokasi').value = location;
+            document.getElementById('deskripsi').value = description;
+            document.getElementById('status').value = status;
+        });
+    }
+});
+
+</script>

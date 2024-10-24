@@ -5,10 +5,10 @@ $sql = "SELECT * FROM events";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo '<div class="d-flex justify-content-center flex-wrap">';
-
+    
     // Loop through the events
     while ($row = $result->fetch_assoc()) {
+        $event_id = $row['id_events']; 
         echo '<div class="col mb-4 mb-3" style="max-width: 600px;">';
         echo '  <div class="product-card position-relative" style="margin-bottom: 80px;">';
 
@@ -40,15 +40,14 @@ if ($result->num_rows > 0) {
         echo '              <use xlink:href="#quick-view"></use>';
         echo '            </svg>';
         echo '          </button>';
-
+        
         echo '        </div>';
         echo '      </div>'; // cart-concern
         echo '    </div>'; // card-img
         echo '  </div>'; // product-card
-        echo '</div>'; // col
+        echo '</div>'; // d-flex justify-content-center flex-wrap
     }
 
-    echo '</div>'; // d-flex justify-content-center flex-wrap
 } else {
     echo '<p>No events found.</p>';
 }

@@ -2,11 +2,11 @@
     <div class="container-md">
         
       <div class="product-content padding-small">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2">
-            
-        <?php include 'eventadmin.php' ?>
-        
-        <div class="d-flex justify-content-center">
+          <div class="d-flex justify-content-center">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 justify-content-center">
+              
+              <?php include 'eventadmin.php' ?>
+              
             <div class="col mb-4 mb-3" style="max-width: 600px;">
                 <div class="product-card position-relative" style="margin-bottom: 80px;">
                 

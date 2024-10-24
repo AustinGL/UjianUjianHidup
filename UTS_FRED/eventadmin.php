@@ -5,7 +5,6 @@ $sql = "SELECT * FROM events";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo '<div class="d-flex justify-content-center flex-wrap">';
     
     // Loop through the events
     while ($row = $result->fetch_assoc()) {
@@ -29,7 +28,7 @@ if ($result->num_rows > 0) {
         echo '        <div class="cart-button d-flex gap-2 justify-content-center align-items-center">';
 
         // View event details button with data attributes
-        echo '          <button type="button" class="btn btn-light" 
+        echo '          <button class="btn btn-light" 
                             data-bs-toggle="modal" 
                             data-bs-target="#eventModal" 
                             data-description="' . htmlspecialchars($row['description']) . '"
@@ -50,14 +49,21 @@ if ($result->num_rows > 0) {
         echo '            </svg>';
         echo '          </button>';
         
+        echo "<button class='btn btn-warning btn-sm rounded-3' data-bs-toggle='modal' data-bs-target='#editEventModal' data-id='" . $row['id_events'] . "'>";
+        echo "<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='icon icon-tabler icon-tabler-trash'>";
+        echo "<path stroke='none' d='M0 0h24v24H0z' fill='none'/>";
+        echo '            <svg class="quick-view">';
+        echo '              <use xlink:href="#quick-view"></use>';
+        echo '            </svg>';
+        echo '          </button>';
+
         echo '        </div>';
         echo '      </div>'; // cart-concern
         echo '    </div>'; // card-img
         echo '  </div>'; // product-card
-        echo '</div>'; // col
+        echo '</div>'; // d-flex justify-content-center flex-wrap
     }
 
-    echo '</div>'; // d-flex justify-content-center flex-wrap
 } else {
     echo '<p>No events found.</p>';
 }
