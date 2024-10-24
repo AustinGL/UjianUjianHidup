@@ -59,69 +59,31 @@
 
 <?php include 'header.php' ?>
 
-<div class="container-fluid">
-        <!-- Add Event Form Section -->
-        <div class="bg-white rounded-4 p-5 mx-auto" style="max-width: 900px;">
-        <div class="row justify-content-center">
-          <div class="container mt-5">
+<?php include 'dashboardelite.php' ?>
 
-            <h2 class="text-center my-2">Add New Event</h2>
-          
+<?php include 'footer.php' ?>
 
-            <!-- Add Event Form -->
-            <form action="add.php" method="POST" enctype="multipart/form-data" class="mt-4">
-              
-              <div class="form-group mb-3">
-                <label for="event-name">Event Name</label>
-                <input type="text" name="event-name" class="form-control" placeholder="Enter Event Name" required>
-              </div>
-
-              <div class="form-group mb-3">
-                <label for="DnT">Date</label>
-                <input type="date" name="DnT" class="form-control" required>
-              </div>
-
-              <div class="form-group mb-3">
-                <label for="slot">Max Capacity</label>
-                <input type="number" name="slot" class="form-control" placeholder="Enter Maximum Capacity" min="1" required>
-              </div>
-
-              <div class="form-group mb-3">
-                <label for="lokasi">Location</label>
-                <input type="text" name="lokasi" class="form-control" placeholder="Enter Location" required>
-              </div>
-
-              <div class="form-group mb-3">
-                <label for="deskripsi">Description</label>
-                <textarea name="deskripsi" class="form-control" placeholder="Event Details" required></textarea>
-              </div>
-              
-              <div class="form-group mb-3">
-                <label for="status">Status</label>
-                <select name="status" class="form-control" required>
-                  <option value="open">Open</option>
-                  <option value="closed">Closed</option>
-                  <option value="canceled">Canceled</option>
-                </select>
-              </div>
-              <div class="form-group mb-3">
-                <label for="Foto">Event Photo</label>
-                <input type="file" name="Foto" class="form-control" required>
-              </div>
-
-
-               <div class="text-center mt-5">
-                 <button type="submit" class="btn btn-primary">Add Event</button>
-               </div>
-
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger">
+            <h1 class="modal-title text-white fs-5" id="deleteModalLabel">Delete Event</h1>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this event?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Close</button>
+            <form id="deleteForm" action="del.php" method="POST">
+                <input type="hidden" id="deleteEventId" name="id_events"> 
+                <button type="submit" class="btn btn-danger">Delete</button> 
             </form>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-<?php include 'footer.php' ?>
 
   <script src="js/jquery-1.11.0.min.js"></script>
   <script src="js/plugins.js"></script>

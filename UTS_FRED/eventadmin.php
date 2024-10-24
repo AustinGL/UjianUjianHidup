@@ -6,9 +6,10 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     echo '<div class="d-flex justify-content-center flex-wrap">';
-
+    
     // Loop through the events
     while ($row = $result->fetch_assoc()) {
+        $event_id = $row['id_events']; 
         echo '<div class="col mb-4 mb-3" style="max-width: 600px;">';
         echo '  <div class="product-card position-relative" style="margin-bottom: 80px;">';
 
@@ -40,7 +41,15 @@ if ($result->num_rows > 0) {
         echo '              <use xlink:href="#quick-view"></use>';
         echo '            </svg>';
         echo '          </button>';
-
+        
+        echo "<button class='btn btn-danger btn-sm rounded-3' data-bs-toggle='modal' data-bs-target='#deleteModal' data-id='" . $row['id_events'] . "'>";
+        echo "<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='icon icon-tabler icon-tabler-trash'>";
+        echo "<path stroke='none' d='M0 0h24v24H0z' fill='none'/>";
+        echo '            <svg class="quick-view">';
+        echo '              <use xlink:href="#quick-view"></use>';
+        echo '            </svg>';
+        echo '          </button>';
+        
         echo '        </div>';
         echo '      </div>'; // cart-concern
         echo '    </div>'; // card-img

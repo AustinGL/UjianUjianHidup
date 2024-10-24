@@ -129,7 +129,11 @@
         <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar">
           <div class="offcanvas-header px-4 pb-0">
             <a class="navbar-brand ps-3" href="index.php">
+<<<<<<< Updated upstream
               <img src="images/main-logo.png" class="logo"  style="height: 100px;" alt="logo">
+=======
+              <img src="images/main-logo.png" class="logo" alt="logo">
+>>>>>>> Stashed changes
             </a>
             <button type="button" class="btn-close btn-close-black p-5" data-bs-dismiss="offcanvas" aria-label="Close"
               data-bs-target="#bdNavbar"></button>
@@ -138,13 +142,13 @@
             <ul id="navbar" class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
                 <!--admin-->
                 <li class="nav-item">
-                    <a class="nav-link me-5" href="addevent.php">Add Event</a>
+                    <a class="nav-link me-5" href="admindashboard.php">Modify Events</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link me-5" href="#">Edit Event</a>
+                    <a class="nav-link me-5" href="#">Manage User</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link me-5" href="#">Delete Event</a>
+                    <a class="nav-link me-5" href="#">View Registrants</a>
                 </li>
                 
                 <!--user-->
