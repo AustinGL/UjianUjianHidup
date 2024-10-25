@@ -38,16 +38,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Update image if provided
         if (!empty($image['size']) && $image['size'] > 0) {
-            $imageData = file_get_contents($image['tmp_name']);
-            $updateImageQuery = "UPDATE users SET image = ? WHERE user_id = ?";
-            $updateImageStmt = $conn->prepare($updateImageQuery);
-            $updateImageStmt->bind_param("bs", $imageData, $user_id);
-            $updateImageStmt->execute();
-            $updateImageStmt->close();
-        
-            // Update session image
-            $_SESSION['image'] = base64_encode($imageData);
-        }
+            // Define the path where you want to save the uploaded image
+            $targetDir = "images/users/";
+            $targetFile = $targetDir . basename($image['name']);
+
+            // Check if the image is a valid upload
+            if (move_uploaded_file($image['tmp_name'], $targetFile)) {
+                // Update image path in the database
+                $updateImageQuery = "UPDATE users SET image = ? WHERE user_id = ?";
+                $updateImageStmt = $conn->prepare($updateImageQuery);
+                
+                if ($updateImageStmt === false) {
+                    echo "Error preparing statement: " . $conn->error;
+                } else {
+                    // Bind the parameters: first parameter as string (s), second as string (s)
+                    $updateImageStmt->bind_param("ss", $targetFile, $user_id);
+                    
+                    // Attempt to execute the statement
+                    if (!$updateImageStmt->execute()) {
+                        echo "Error executing query: " . $updateImageStmt->error;
+                    } else {
+                        // Update session image path
+                        $_SESSION['image'] = $targetFile; // Store the image path in the session
+                        echo "Image updated successfully!";
+                    }
+                    // Close the statement
+                    $updateImageStmt->close();
+                }
+            } else {
+                echo "Error uploading image.";
+            }
+        } else {
+            echo "No image uploaded or image size is zero.";
+        }        
 
         $_SESSION['message'] = "Profile updated successfully!";
     } else {
@@ -55,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Redirect back to profile page
-    header("Location: index.php");
+    header("Location: index.php"); // Uncomment to enable redirection
     exit();
 }
 ?>

@@ -1,5 +1,7 @@
 <!-- symbol cuman buat sipenan-->
-<?php session_start(); ?>
+<?php session_start(); 
+$imagePath = $_SESSION['image'];
+?>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol xmlns="http://www.w3.org/2000/svg" id="shopping-carriage" viewBox="0 0 24 24" fill="none">
@@ -208,9 +210,9 @@ if (isset($_SESSION['error_message'])) {
     <!-- Show User Image after Login -->
     <li class="pe-3">
         <a href="#" class="border-0" data-bs-toggle="dropdown" aria-expanded="false">
-            <?php if (!empty($_SESSION['image'])): ?>
-                <img src="data:image/jpeg;base64,<?= $_SESSION['image']; ?>" alt="User Image" width="50" height="50" class="rounded-circle">
-            <?php else: ?>
+        <?php if (!empty($imagePath)): ?>
+        <img src="<?= htmlspecialchars($imagePath); ?>" alt="User Image" width="50" height="50" class="rounded-circle">
+    <?php else: ?>
                 <svg class="user" width="50" height="50">
                     <use xlink:href="#user"></use>
                 </svg>
@@ -228,13 +230,6 @@ if (isset($_SESSION['error_message'])) {
         <a href="login" data-bs-toggle="modal" data-bs-target="#modallogin" class="border-0">
             <svg class="user" width="40" height="40">
                 <use xlink:href="#user"></use>
-            </svg>
-        </a>
-    </li>
-    <li class="pe-3">
-        <a href="#" data-bs-toggle="modal" data-bs-target="#modallong" class="border-0">
-            <svg class="shopping-cart" width="40" height="40">
-                <use xlink:href="#shopping-cart"></use>
             </svg>
         </a>
     </li>
