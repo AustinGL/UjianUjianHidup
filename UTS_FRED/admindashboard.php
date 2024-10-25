@@ -161,6 +161,7 @@
 
     if (deleteUserModal) {
         deleteUserModal.addEventListener('show.bs.modal', function (event) {
+          console.log(deleteUserIdInput, "ini id")
             var button = event.relatedTarget;
             var userId = button.getAttribute('data-user-id');
             deleteUserIdInput.value = userId; 
