@@ -10,17 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $role = "user";
 
     // Path to the default profile image
-    $imagePath = __DIR__ . "/images/defprof.png";
-    $img = null;
-    
-    if (file_exists($imagePath)) {
-        // Read the image and encode it into base64
-        $img = base64_encode(file_get_contents($imagePath));
-    } else {
-        echo "Default profile image not found!";
-        exit();
-    }
-    
+    $defaultImagePath = '/images/defprof.png';  // Use relative path
+    $imgPath = null;
+
     // Validation
     if (empty($name) || empty($email) || empty($password) || empty($repassword)) {
         echo "All fields are required!";
@@ -63,16 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $user_id = sprintf("C%03d", $newIdNumber);
             }
 
-            // Insert the new user with the default profile image
+            // Insert the new user with the default profile image path
             $sql = "INSERT INTO users (user_id, user_nama, user_email, user_password, role, image) VALUES (?, ?, ?, ?, ?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('ssssss', $user_id, $name, $email, $hashedPassword, $role, $img);
-
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ssssss', $user_id, $name, $email, $hashedPassword, $role, $defaultImagePath); // Use the image path instead of image data
 
             if ($stmt->execute()) {
                 echo "User registered successfully with ID: $user_id";
             } else {
-                echo "There was an error registering the user.";
+                echo "There was an error registering the user: " . $stmt->error; // Output specific error
             }
             $stmt->close();
         }
