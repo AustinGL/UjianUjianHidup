@@ -1,0 +1,15 @@
+{
+  "name": "ping/ujian-ujian-hidup",
+  "description": "Event e-commerce",
+  "autoload": {
+    "psr-4": {
+      "Ping\\UjianUjianHidup\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit tests"
+  },
+  "require-dev": {
+    "sensiolabs/security-checker": "^6.0"
+  }
+}
