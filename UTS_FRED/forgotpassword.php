@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bind_param('ss', $hashedPassword, $username);
             if ($stmt->execute()) {
                 $success_message = "Password updated successfully.";
+
+                header('index.php');
             } else {
                 $error_message = "Failed to update password.";
             }
@@ -49,11 +51,33 @@ $conn->close();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Forgot Password</title>
-    <!-- Add your meta and style includes -->
+  <title>Stylish - Shoes Online Store HTML Template</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="author" content="TemplatesJungle">
+  <meta name="keywords" content="Online Store">
+  <meta name="description" content="Stylish - Shoes Online Store HTML Template">
+
+  <link rel="stylesheet" href="css/vendor.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,900;1,900&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+    rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+
+
+<div class="container-fluid">
+        <!-- Add Event Form Section -->
+        <div class="bg-white rounded-4 p-5 mx-auto" style="max-width: 900px;">
+        <div class="row justify-content-center">
+          <div class="container mt-5">
         <h2>Reset Password</h2>
 
         <form action="forgotpassword.php" method="POST">
@@ -71,16 +95,27 @@ $conn->close();
                 <label for="user_repassword">Re-enter Password</label>
                 <input type="password" name="user_repassword" class="form-control" placeholder="Re-enter Password" required>
             </div>
+<div class="row justify-content-around py-3">
+<button type="submit" class="btn btn-primary col-4 rounded-pill">Reset Password</button>
 
-            <button type="submit" class="btn btn-primary">Reset Password</button>
-        </form>
+            <?php if (!empty($success_message)): ?>
 
-        <!-- Display success or error messages -->
-        <?php if (!empty($success_message)): ?>
+            <a href="index.php" class="btn btn-primary col-4 rounded-pill"> go to login?</a>
+
             <p class="text-success"><?php echo $success_message; ?></p>
         <?php elseif (!empty($error_message)): ?>
             <p class="text-danger"><?php echo $error_message; ?></p>
         <?php endif; ?>
+</div>
+            
+
+        </form>
+
     </div>
+    </div>
+    </div>
+    </div>
+
+
 </body>
 </html>

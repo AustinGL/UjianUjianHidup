@@ -9,14 +9,6 @@ require_once 'connect.php';
 $success_message = '';
 $error_message = '';
 
-// Redirect if user is already logged in
-if (isset($_SESSION['user_id'])) {
-    $success_message = "You are already logged in!";
-    // Optionally redirect to another page if needed
-    header('Location: index.php');
-    exit();
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -46,18 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 // Redirect based on user role
                 if ($_SESSION['role'] === 'admin') {
-                 
-                    $success_message = "Logged in as admin.";
-                    header('Location: admindashboard.php'); // Uncomment to redirect admins
+                    echo "admin";
+                    exit();
                 } else {
-                 
-                    $success_message = "Logged in as user.";
-                    // header('Location: user_dashboard.php'); // Uncomment to redirect users
+                    echo "user";
+                    exit();
                 }
-
-                // Successful login, show success message
-                $success_message = "Login successful! Welcome " . htmlspecialchars($_SESSION['user_nama']);
-                exit(); // Ensure no further code is executed after redirection
             } else {
                 $error_message = "Invalid username or password!";
             }
@@ -67,6 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Close the statement and connection
         $stmt->close();
+    }
+
+    if ($success_message) {
+        echo $success_message;
+    } else {
+        echo $error_message;
     }
 }
 

@@ -92,20 +92,51 @@
           <div class="login-detail">
             <div class="login-form p-0">
               <div class="col-lg-12 mx-auto">
-              <form id="login-form" action="login.php" method="POST"> <!-- Added method="POST" -->
-  <input type="text" name="username" placeholder="Username*" class="mb-3 ps-3 text-input">
-  <input type="password" name="password" placeholder="Password" class="ps-3 text-input">
+              <form id="login-form" action="login.php" method="POST"> 
+  <input type="text" name="username" placeholder="Username*" class="mb-3 ps-3 text-input" required>
+  <input type="password" name="password" placeholder="Password" class="ps-3 text-input" required>
   <div class="checkbox d-flex justify-content-between mt-4">
     <p class="lost-password">
-      <a href="#">Forgot your password?</a>
+      <a href="./forgotpassword.php">Forgot your password?</a>
     </p>
   </div>
+  <div id="message" style="color:red;"></div> <!-- Message area -->
   <div class="modal-footer mt-5 d-flex justify-content-center">
-    <button type="submit" class="btn btn-red hvr-sweep-to-right dark-sweep">Login</button> <!-- Changed type="button" to type="submit" -->
-    <a href="././register.php" class="btn btn-outline-gray hvr-sweep-to-right dark-sweep">Register</a>
+    <button type="submit" class="btn btn-red hvr-sweep-to-right dark-sweep">Login</button> 
+    <a href="./register.php" class="btn btn-outline-gray hvr-sweep-to-right dark-sweep">Register</a>
   </div>
 </form>
 
+<?php
+// Start the session
+
+
+// Check for error or success messages
+$success_message = '';
+$error_message = '';
+
+if (isset($_SESSION['success_message'])) {
+    $success_message = $_SESSION['success_message'];
+    unset($_SESSION['success_message']); // Clear message after displaying it
+}
+
+if (isset($_SESSION['error_message'])) {
+    $error_message = $_SESSION['error_message'];
+    unset($_SESSION['error_message']); // Clear message after displaying it
+}
+?>
+
+<?php if (!empty($success_message)): ?>
+    <div class="alert alert-success">
+        <?php echo htmlspecialchars($success_message); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (!empty($error_message)): ?>
+    <div class="alert alert-danger">
+        <?php echo htmlspecialchars($error_message); ?>
+    </div>
+<?php endif; ?>
               </div>
             </div>
           
@@ -129,11 +160,7 @@
         <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar">
           <div class="offcanvas-header px-4 pb-0">
             <a class="navbar-brand ps-3" href="index.php">
-<<<<<<< Updated upstream
               <img src="images/main-logo.png" class="logo"  style="height: 100px;" alt="logo">
-=======
-              <img src="images/main-logo.png" class="logo" alt="logo">
->>>>>>> Stashed changes
             </a>
             <button type="button" class="btn-close btn-close-black p-5" data-bs-dismiss="offcanvas" aria-label="Close"
               data-bs-target="#bdNavbar"></button>
@@ -145,7 +172,8 @@
                     <a class="nav-link me-5" href="admindashboard.php">Modify Events</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link me-5" href="#">Manage User</a>
+                    <a class="nav-link me-5" href="logout.php
+                    ">Manage User</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link me-5" href="#">View Registrants</a>
@@ -189,3 +217,35 @@
         </div>
       </div>
     </nav>
+
+    <script>
+document.getElementById('login-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form from submitting normally
+  const formData = new FormData(this);
+  
+  fetch('login.php', {
+    method: 'POST',
+    body: formData,
+  })
+  .then(response => response.text())
+  .then(data => {
+    const messageDiv = document.getElementById('message');
+    
+    if (data === 'admin') {
+      messageDiv.style.color = 'green';
+      messageDiv.textContent = 'Login successful! Redirecting to admin page...';
+      setTimeout(() => window.location.href = 'admin_dashboard.php', 2000);
+    } else if (data === 'user') {
+      messageDiv.style.color = 'green';
+      messageDiv.textContent = 'Login successful! Redirecting to user dashboard...';
+      setTimeout(() => window.location.href = 'user_dashboard.php', 2000);
+    } else {
+      messageDiv.style.color = 'red';
+      messageDiv.textContent = data; // Display error message
+    }
+  })
+  .catch(error => {
+    document.getElementById('message').textContent = 'An error occurred. Please try again.';
+  });
+});
+</script>
