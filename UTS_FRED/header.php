@@ -1,6 +1,8 @@
 <!-- symbol cuman buat sipenan-->
 <?php session_start(); 
-$imagePath = $_SESSION['image'];
+if(isset($_SESSION['image'])){
+  $imagePath = $_SESSION['image'];
+}
 ?>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

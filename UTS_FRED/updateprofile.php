@@ -1,5 +1,9 @@
-<?php
-session_start();
+<!-- symbol cuman buat sipenan-->
+<?php session_start(); 
+if(isset($_SESSION['image'])){
+  $imagePath = $_SESSION['image'];
+}
+
 include 'connect.php'; // Ensure this file is included properly
 ?>
 <!DOCTYPE html>
@@ -24,15 +28,14 @@ include 'connect.php'; // Ensure this file is included properly
     .message.error { background-color: #f8d7da; color: #721c24; }
   </style>
 </head>
-
+    
 <body>
   <div class="container-fluid">
     <div class="bg-white rounded-4 p-5 mx-auto" style="max-width: 900px;">
       <div class="row justify-content-center">
         <div class="container mt-5">
           <div class="justify-content-center d-flex">
-            <!-- Display user image from $_SESSION -->
-            <img id="profileImage" src="data:image/jpeg;base64,<?= $_SESSION['image']; ?>" class="my-2 rounded-circle" height="100px" width="100px">
+          <img src="<?= htmlspecialchars($imagePath); ?>" alt="User Image" width="100" height="100" class="rounded-circle">
           </div>
           
           <!-- Display username from $_SESSION -->
