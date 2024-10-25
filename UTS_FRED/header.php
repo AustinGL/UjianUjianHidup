@@ -148,29 +148,32 @@ if (isset($_SESSION['error_message'])) {
       </div>
     </div>
   </div>
-<!--nav bar buat admin-->
-<nav id="header-nav" class="navbar navbar-expand-lg">
-      <div class="container-lg">
-        <a class="navbar-brand" href="index.php">
-          <img src="images/main-logo.png" class="logo" style="height: 100px;" alt="logo">
+  
+  <!--nav bar buat admin-->
+  <nav id="header-nav" class="navbar navbar-expand-lg">
+    <div class="container-lg">
+      <a class="navbar-brand" href="index.php">
+        <img src="images/main-logo.png" class="logo" style="height: 100px;" alt="logo">
+      </a>
+      <button class="navbar-toggler d-flex d-lg-none order-3 border-0 p-1 ms-2" type="button" data-bs-toggle="offcanvas"
+      data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <svg class="navbar-icon">
+        <use xlink:href="#navbar-icon"></use>
+      </svg>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar">
+      <div class="offcanvas-header px-4 pb-0">
+        <a class="navbar-brand ps-3" href="index.php">
+          <img src="images/main-logo.png" class="logo"  style="height: 100px;" alt="logo">
         </a>
-        <button class="navbar-toggler d-flex d-lg-none order-3 border-0 p-1 ms-2" type="button" data-bs-toggle="offcanvas"
-          data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
-          <svg class="navbar-icon">
-            <use xlink:href="#navbar-icon"></use>
-          </svg>
-        </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar">
-          <div class="offcanvas-header px-4 pb-0">
-            <a class="navbar-brand ps-3" href="index.php">
-              <img src="images/main-logo.png" class="logo"  style="height: 100px;" alt="logo">
-            </a>
-            <button type="button" class="btn-close btn-close-black p-5" data-bs-dismiss="offcanvas" aria-label="Close"
-              data-bs-target="#bdNavbar"></button>
-          </div>
-          <div class="offcanvas-body">
-<!--role if here-->
-            <ul id="navbar" class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
+        <button type="button" class="btn-close btn-close-black p-5" data-bs-dismiss="offcanvas" aria-label="Close"
+        data-bs-target="#bdNavbar"></button>
+      </div>
+      <div class="offcanvas-body">
+        <!--role if here-->
+        <ul id="navbar" class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
+
+    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                 <!--admin-->
                 <li class="nav-item">
                     <a class="nav-link me-5" href="admindashboard.php">Modify Events</a>
@@ -182,7 +185,9 @@ if (isset($_SESSION['error_message'])) {
                 <li class="nav-item">
                     <a class="nav-link me-5" href="#">View Registrants</a>
                 </li>
-                
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'user'): ?>
                 <!--user-->
               <li class="nav-item">
                 <a class="nav-link me-5" href="#">Available Event</a>
@@ -190,7 +195,7 @@ if (isset($_SESSION['error_message'])) {
               <li class="nav-item">
                 <a class="nav-link me-5" href="#">My Event</a>
               </li>
-
+    <?php endif; ?>
             </ul>
           </div>
         </div>
@@ -256,7 +261,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     if (data === 'admin') {
       messageDiv.style.color = 'green';
       messageDiv.textContent = 'Login successful! Redirecting to admin page...';
-      setTimeout(() => window.location.href = 'admin_dashboard.php', 2000);
+      setTimeout(() => window.location.href = 'admindashboard.php', 2000);
     } else if (data === 'user') {
       messageDiv.style.color = 'green';
       messageDiv.textContent = 'Login successful! Redirecting to user dashboard...';
