@@ -1,3 +1,6 @@
+<!-- symbol cuman buat sipenan-->
+<?php session_start(); ?>
+
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol xmlns="http://www.w3.org/2000/svg" id="shopping-carriage" viewBox="0 0 24 24" fill="none">
       <path
@@ -145,7 +148,7 @@ if (isset($_SESSION['error_message'])) {
       </div>
     </div>
   </div>
-
+<!--nav bar buat admin-->
 <nav id="header-nav" class="navbar navbar-expand-lg">
       <div class="container-lg">
         <a class="navbar-brand" href="index.php">
@@ -166,6 +169,7 @@ if (isset($_SESSION['error_message'])) {
               data-bs-target="#bdNavbar"></button>
           </div>
           <div class="offcanvas-body">
+<!--role if here-->
             <ul id="navbar" class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
                 <!--admin-->
                 <li class="nav-item">
@@ -190,31 +194,49 @@ if (isset($_SESSION['error_message'])) {
             </ul>
           </div>
         </div>
-        <div class="user-items ps-0 ps-md-5">
-          <ul class="d-flex justify-content-end list-unstyled align-item-center m-0">
-            <li class="pe-3">
-              <a href="login" data-bs-toggle="modal" data-bs-target="#modallogin" class="border-0">
-                <svg class="user" width="24" height="24">
-                  <use xlink:href="#user"></use>
+
+<!-- edit sini-->
+
+<div class="user-items ps-0 ps-md-5">
+  <ul class="d-flex justify-content-end list-unstyled align-item-center m-0">
+  <?php if (isset($_SESSION['user_id'])): ?>
+    <!-- Show User Image after Login -->
+    <li class="pe-3">
+        <a href="#" class="border-0" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php if (!empty($_SESSION['image'])): ?>
+                <img src="data:image/jpeg;base64,<?= $_SESSION['image']; ?>" alt="User Image" width="50" height="50" class="rounded-circle">
+            <?php else: ?>
+                <svg class="user" width="50" height="50">
+                    <use xlink:href="#user"></use>
                 </svg>
-              </a>
-            </li>
-            <li class="pe-3">
-              <a href="#" data-bs-toggle="modal" data-bs-target="#modallong" class="border-0">
-                <svg class="shopping-cart" width="24" height="24">
-                  <use xlink:href="#shopping-cart"></use>
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="search-item border-0" data-bs-toggle="collapse" data-bs-target="#search-box" aria-label="Toggle navigation">
-                <svg class="search" width="24" height="24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
-          </ul>
-        </div>
+            <?php endif; ?>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Hello, <?= $_SESSION['user_nama']; ?></a></li>
+            <li><a class="dropdown-item" href="updateprofile.php">Profile</a></li>
+            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+        </ul>
+    </li>
+<?php else: ?>
+    <!-- Show Login and Cart Icons if Not Logged In -->
+    <li class="pe-3">
+        <a href="login" data-bs-toggle="modal" data-bs-target="#modallogin" class="border-0">
+            <svg class="user" width="40" height="40">
+                <use xlink:href="#user"></use>
+            </svg>
+        </a>
+    </li>
+    <li class="pe-3">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#modallong" class="border-0">
+            <svg class="shopping-cart" width="40" height="40">
+                <use xlink:href="#shopping-cart"></use>
+            </svg>
+        </a>
+    </li>
+<?php endif; ?>
+
+  </ul>
+</div>
       </div>
     </nav>
 
@@ -238,7 +260,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     } else if (data === 'user') {
       messageDiv.style.color = 'green';
       messageDiv.textContent = 'Login successful! Redirecting to user dashboard...';
-      setTimeout(() => window.location.href = 'user_dashboard.php', 2000);
+      setTimeout(() => window.location.href = 'index.php', 2000);
     } else {
       messageDiv.style.color = 'red';
       messageDiv.textContent = data; // Display error message

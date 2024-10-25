@@ -2,7 +2,6 @@
 session_start();
 require_once 'connect.php';
 
-// Initialize messages
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['user_nama']);
     $email = trim($_POST['user_email']);
@@ -10,7 +9,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $repassword = $_POST['user_repassword'];
     $role = "user";
 
-    // Validate form data
+    // Path to the default profile image
+    $imagePath = __DIR__ . "/images/defprof.png";
+    $img = null;
+    
+    if (file_exists($imagePath)) {
+        // Read the image and encode it into base64
+        $img = base64_encode(file_get_contents($imagePath));
+    } else {
+        echo "Default profile image not found!";
+        exit();
+    }
+    
+    // Validation
     if (empty($name) || empty($email) || empty($password) || empty($repassword)) {
         echo "All fields are required!";
     } elseif ($password !== $repassword) {
@@ -20,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Check if the username or email already exists
+        // Check if username or email already exists
         $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE user_nama = ? OR user_email = ?");
         $stmt->bind_param('ss', $name, $email);
         $stmt->execute();
@@ -31,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($existingUserCount > 0) {
             echo "Username or email already exists!";
         } else {
+            // Generate a new user ID
             function idExists($conn, $id) {
                 $idCount = null;
                 $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE user_id = ?");
@@ -51,9 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $user_id = sprintf("C%03d", $newIdNumber);
             }
 
-            $sql = "INSERT INTO users (user_id, user_nama, user_email, user_password, role, image) VALUES (?, ?, ?, ?, ?, '')";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('sssss', $user_id, $name, $email, $hashedPassword, $role);
+            // Insert the new user with the default profile image
+            $sql = "INSERT INTO users (user_id, user_nama, user_email, user_password, role, image) VALUES (?, ?, ?, ?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('ssssss', $user_id, $name, $email, $hashedPassword, $role, $img);
+
 
             if ($stmt->execute()) {
                 echo "User registered successfully with ID: $user_id";
