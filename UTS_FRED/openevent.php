@@ -1,7 +1,7 @@
 <?php
 require "connect.php";
 
-$sql = "SELECT * FROM events";
+$sql = "SELECT * FROM events WHERE status = 'open'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -130,10 +130,40 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary rounded-3" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary rounded-3" id="registerButton">Register</button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Modal Structure for Event Registration -->
+<div class="modal fade" id="registerEventModal" tabindex="-1" aria-labelledby="registerEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-light" id="registerEventModalLabel">Event Registration Form</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerEventForm" method="POST" action="register_event.php">
+                    <input type="hidden" name="event_id" id="event_id">
+                    <div class="form-group mb-3">
+                        <label for="username">Name</label>
+                        <input type="text" name="full_name" id="full_name" class="form-control"required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tickets">Number of Tickets</label>
+                        <input type="number" name="tickets" id="tickets" class="form-control" min="1" max="10" value="1" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function setEventId(eventId) {
         document.getElementById('event_id').value = eventId;

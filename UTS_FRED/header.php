@@ -172,28 +172,28 @@ if (isset($_SESSION['error_message'])) {
       <div class="offcanvas-body">
         <!--role if here-->
         <ul id="navbar" class="navbar-nav fw-bold justify-content-end align-items-center flex-grow-1">
-
-    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                <!--admin-->
-                <li class="nav-item">
-                    <a class="nav-link me-5" href="admindashboard.php">Modify Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link me-5" href="logout.php
-                    ">Manage User</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link me-5" href="#">View Registrants</a>
-                </li>
-    <?php endif; ?>
+          
+          <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+            <!--admin-->
+            <li class="nav-item">
+              <a class="nav-link me-5" href="admindashboard.php">Modify Events</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link me-5" href="logout.php
+              ">Manage User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link me-5" href="#">View Registrants</a>
+            </li>
+            <?php endif; ?>
 
     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'user'): ?>
                 <!--user-->
               <li class="nav-item">
-                <a class="nav-link me-5" href="#">Available Event</a>
+                <a class="nav-link me-5" href="availEvent.php">Available Event</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link me-5" href="#">My Event</a>
+                <a class="nav-link me-5" href="myevent.php">My Event</a>
               </li>
     <?php endif; ?>
             </ul>
